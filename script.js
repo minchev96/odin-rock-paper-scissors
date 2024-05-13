@@ -1,10 +1,15 @@
+const numberOfRounds = 5;
 let humanScore = 0;
 let computerScore = 0;
 
-const humanChoice = getHumanChoice();
-const computerChoice = getComputerChoice();
+for(let i = 1; i <= numberOfRounds; i++){
+    playGame(i);
 
-playRound(humanChoice, computerChoice);
+    if(i == numberOfRounds){
+        checkWinner(humanScore, computerScore);
+    }
+}
+
 
 function getComputerChoice(){
     let number = Math.floor(Math.random() * 3);
@@ -13,11 +18,11 @@ function getComputerChoice(){
     if(number === 2) return 'paper';
 }
 
-function getHumanChoice(){
-    let choice = prompt("Choose Rock Paper scissors").toLowerCase();
+function getHumanChoice(roundId){
+    let choice = prompt(`Round ${roundId}\nChoose Rock Paper scissors`).toLowerCase();
     
     if(choice !== 'rock' && choice !== 'paper' && choice !== 'scissors'){
-        return 'Invalid Choise'
+        console.log('Invalid Choise')
     }
 
     return choice;
@@ -59,8 +64,15 @@ function playRound(humanChoice, computerChoice){
     }
 }
 
+function checkWinner(humanScore, computerScore){
+    if(humanScore > computerScore) console.log('You Win');
+    else if(humanScore < computerScore) console.log('You Lose'); 
+    else console.log('Tie!');
+}
 
-console.log(humanChoice);
-console.log(computerChoice);
-console.log(humanScore);
-console.log(computerScore);
+function playGame(round){
+    const humanChoice = getHumanChoice(round);
+    const computerChoice = getComputerChoice();
+    
+    playRound(humanChoice, computerChoice);
+}
